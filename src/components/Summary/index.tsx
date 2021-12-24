@@ -20,15 +20,15 @@ export const Summary = () => {
                     <p>Saidas</p>
                     <img src={outcomeImg} alt="outcome" />
                 </header>
-                <strong>R$ 500,00</strong>
+                <strong>R$ -500,00</strong>
             </div>
 
-            <div>
+            <div className='highlight-background'>
                 <header>
                     <p>Total</p>
                     <img src={totalImg} alt="outcome" />
                 </header>
-                <strong>R$ -500,00</strong>
+                <strong>R$ 500,00</strong>
             </div>
 
         </Container>
