@@ -40,9 +40,16 @@ export const TransactionTable = () => {
           {listTransactions.map(({title,amount,id,createdAt,type,category}) => (
                <tr key={id}>
                <td>{title}</td>
-               <td className={type}>R$ {String(amount)}</td>
+
+               <td className={type}>{new Intl.NumberFormat('pt-BR', {
+                 style:'currency',
+                 currency:'BRL'
+               }).format(amount)}</td>
+
                <td>{category}</td>
-               <td>{createdAt}</td>
+               <td>{new Intl.DateTimeFormat('pt-BR').format(
+                 new Date(createdAt)
+                 )}</td>
              </tr>
           ))}
         </tbody>
