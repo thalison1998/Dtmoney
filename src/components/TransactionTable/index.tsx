@@ -1,44 +1,52 @@
-import React from 'react'
-import { api } from '../../services/api';
-import { Container } from './styles'
+import React from "react";
+import { api } from "../../services/api";
+import { Container } from "./styles";
+
+interface Transactions {
+  title: string;
+  amount: number;
+  id: string;
+  createdAt: string;
+  type: string;
+  category:string;
+}
 
 export const TransactionTable = () => {
+  const [listTransactions, setListTransactions] = React.useState<
+    Transactions[]
+  >([]);
 
-    React.useEffect(()=>{
-        (async () => {
-            const response = await api.get('transactions');
-            console.log(response.data)
-        })()
-    },[]);
+  React.useEffect(() => {
+    (async () => {
+      const response = await api.get("transactions");
+      setListTransactions(response.data.transactions);
+      console.log(response.data.transactions)
+    })();
+  }, []);
 
-    return (
-        <Container>
-           <table>
-               <thead>
-                   <tr>
-                       <th>Título</th>
-                       <th>Valor</th>
-                       <th>Categoria</th>
-                       <th>Data</th>
-                   </tr>
-               </thead>
+  return (
+    <Container>
+      <table>
+        <thead>
+          <tr>
+            <th>Título</th>
+            <th>Valor</th>
+            <th>Categoria</th>
+            <th>Data</th>
+          </tr>
+        </thead>
 
-               <tbody>
-                   <tr>
-                       <td>Desenvolvimento de site</td>
-                       <td className='deposit'>R$ 12.000,00</td>
-                       <td>Venda</td>
-                       <td>13/04/2021</td>
-                   </tr>
-                   <tr>
-                       <td>Aluguel</td>
-                       <td className='withdraw'>R$ -1.000</td>
-                       <td>Casa</td>
-                       <td>13/04/2021</td>
-                   </tr>
-               </tbody>
-
-           </table>
-        </Container>
-    )
-}
+        <tbody>
+          {listTransactions.map(({title,amount,id,createdAt,type,category}) => (
+               <tr key={id}>
+               <td>{title}</td>
+               <td className={type}>R$ {String(amount)}</td>
+               <td>{category}</td>
+               <td>{createdAt}</td>
+             </tr>
+          ))}
+        </tbody>
+      </table>
+    </Container>
+  );
+};

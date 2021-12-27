@@ -4,6 +4,7 @@ import { Container, RadioBox, TransactionTypeContainer } from "./styles";
 import closeImg from '../../assets/close.svg'
 import incomeImg from '../../assets/income.svg'
 import outcomeImg from '../../assets/outcome.svg'
+import { api } from "../../services/api";
 
 Modal.setAppElement("#root");
 
@@ -24,7 +25,9 @@ export const NewTransactionModal = ({
 
   const handleCreateNewTransaction = (e:FormEvent) => {
     e.preventDefault();
-    console.log({title, value, category, type})
+    const data = {title, value, category, type};
+
+    api.post('/transactions', data);
 
   }
 
